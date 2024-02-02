@@ -19,6 +19,7 @@ export const BearPage = () => {
 
         <PandaBears />
 
+        <BearsDisplay />
 
       </div>
 
@@ -85,3 +86,12 @@ export const PandaBears = () => {
     </WhiteCard>
   )
 }
+
+export const BearsDisplay = () => {
+  return (
+    <WhiteCard>
+
+    </WhiteCard>
+  )
+}
+
