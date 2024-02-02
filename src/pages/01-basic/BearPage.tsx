@@ -1,3 +1,4 @@
+import { useShallow } from 'zustand/react/shallow';
 import { WhiteCard } from '../../components';
 import { useBearStore } from '../../stores';
 
@@ -80,7 +81,7 @@ export const PandaBears = () => {
       <div className="flex flex-col md:flex-row">
         <button onClick={() => IncreasePandaBears(+1)}> +1</button>
         <span className="text-3xl mx-2 lg:mx-10"> {pandaBears} </span>
-        <button onClick={() => IncreasePandaBears(+1)}>-1</button>
+        <button onClick={() => IncreasePandaBears(-1)}>-1</button>
       </div>
 
     </WhiteCard>
@@ -88,8 +89,32 @@ export const PandaBears = () => {
 }
 
 export const BearsDisplay = () => {
+
+  //Note: EL useShallow se encarga de analizar si las propiedades del estado realmente cambiaron para no renderizar si es que existe la posibilidad de que traiga en mismo estado, con los mismos valores.
+
+  const bears = useBearStore(useShallow(state => state.bears));
+  const doNothing = useBearStore(state => state.doNothing);
+  const addBear = useBearStore(state => state.addBear);
+  const clearBears = useBearStore(state => state.clearBears);
+
+
   return (
     <WhiteCard>
+      <h1>Osos</h1>
+
+      <button onClick={doNothing}>
+        Hacer nada
+      </button>
+      <button className='mt-2' onClick={addBear}>
+        Agregar oso
+      </button>
+      <button className='mt-2' onClick={clearBears}>
+        Borrar osos
+      </button>
+
+      <pre>
+        {JSON.stringify(bears, null, 2)}
+      </pre>
 
     </WhiteCard>
   )
