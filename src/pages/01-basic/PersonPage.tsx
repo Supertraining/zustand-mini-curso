@@ -11,7 +11,6 @@ export const PersonPage = () => {
   const setFirstName = userPersonStore(state => state.setFirstName);
   const setLastName = userPersonStore(state => state.setLastName);
 
-
   return (
     <>
       <h1>Persona</h1>
