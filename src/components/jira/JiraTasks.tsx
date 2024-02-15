@@ -1,37 +1,26 @@
-import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline } from 'react-icons/io5';
+import { IoAddOutline, IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { Task, TaskStatus } from '../../interfaces';
 import { SingleTask } from './SingleTask';
-import { useTaskStore } from '../../stores';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useTasks } from '../../hooks/useTasks';
 interface Props {
   title: string;
   tasks: Task[]
-  value: TaskStatus;
+  status: TaskStatus;
 }
 
 
-export const JiraTasks = ({ title, value, tasks }: Props) => {
+export const JiraTasks = ({ title, status, tasks }: Props) => {
 
+  const {
+    isDragging,
 
-  const isDragging = useTaskStore(state => !!state.draggingTaskId);
-  const changetaskStatus = useTaskStore(state => state.changeTaskStatus);
-  const draggingTaskId = useTaskStore(state => state.draggingTaskId);
-  const [onDragOver, setOndragOver] = useState(false)
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setOndragOver(true);
-  };
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setOndragOver(false);
-  };
-  const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    changetaskStatus(draggingTaskId!, value)
-    setOndragOver(false);
-  };
+    onDragOver,
+    handleAddTask,
+    handleDragOver,
+    handleDragLeave,
+    handleOnDrop,
+  } = useTasks({ status })
 
   return (
     <div
@@ -40,14 +29,14 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
       onDrop={handleOnDrop}
       className={
         classNames("!text-black border-4  relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]", {
-          'border-blue-500 border-dotted': isDragging,
-          'border-green-500 border-dotted': onDragOver && isDragging
+          'border-blue-500 border-solid': isDragging,
+          'border-green-500 border-solid': onDragOver && isDragging
         })
       }>
 
 
       {/* Task Header */}
-      <div className="relative flex flex-row justify-between">
+      <div className="relative flex flex-row justify-evenly mb-3">
 
         <div className="flex items-center justify-center">
 
@@ -60,14 +49,14 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
           <h4 className="ml-4 text-xl font-bold text-navy-700">{title}</h4>
         </div>
 
-        <button>
-          <IoEllipsisHorizontalOutline />
+        <button onClick={handleAddTask}>
+          <IoAddOutline />
         </button>
 
       </div>
 
       {/* Task Items */}
-      <div className="h-full w-full">
+      <div className="h-full w-full z-10 border border-solid border-gray-300 rounded">
 
         {tasks.map(task => (
           <SingleTask key={task.id} task={task} />

@@ -16,7 +16,7 @@ hr {
 }
 
 button {
-  @apply transition-all hover:bg-indigo-800 bg-indigo-600 px-8 py-2 rounded-3xl text-gray-100 font-semibold uppercase tracking-wide shadow-md;
+  @apply transition-all hover:bg-indigo-800 bg-indigo-600 px-2 py-2 rounded-3xl text-gray-100 font-semibold uppercase tracking-wide shadow-md;
 }
 
 input:not(.swal2-input)[type=text],input:not(.swal2-input)[type=password], input:not(.swal2-input)[type=email], input:not(.swal2-input)[type=number], input:not(.swal2-input)[type=date], input:not(.swal2-input)[type=time]  {
